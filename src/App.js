@@ -21,12 +21,12 @@ const WrappedView = () => {
     {activeAccount ? (
       <p>
           Autenticacion exitosa
-        </p>
+      </p>
     ) :null}
     </AuthenticatedTemplate>
     <UnauthenticatedTemplate>
-    <button onClick={handleRedirect}>
-    Ingresar
+    <button onClick={handleRedirect} id='btnIngresar'>
+        Ingresar
     </button>
     </UnauthenticatedTemplate>
      </div>
@@ -39,5 +39,4 @@ const App = ({ instance}) =>{
     </MsalProvider>
   );
 };
-  
 export default App;

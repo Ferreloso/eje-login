@@ -1,25 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal,MsalProvider } from '@azure/msal-react';
+import { loginRequest } from './auth-config';
 
-function App() {
-  return (
+const WrappedView = () => {
+  const {instance} = useMsal();
+  const activeAccount = instance.getActiveAccount();
+
+  const handleRedirect = () =>{
+    instance
+      .loginRedirect({
+        ...loginRequest,
+        prompt: "create",
+      })
+      .catch((error)=>console.log(error));
+  };
+
+  return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+    <AuthenticatedTemplate>
+    {activeAccount ? (
+      <p>
+          Autenticacion exitosa
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    ) :null}
+    </AuthenticatedTemplate>
+    <UnauthenticatedTemplate>
+    <button onClick={handleRedirect}>
+    Ingresar
+    </button>
+    </UnauthenticatedTemplate>
+     </div>
   );
-}
-
+};
+const App = ({ instance}) =>{
+  return(
+    <MsalProvider instance={instance}>
+      <WrappedView/>
+    </MsalProvider>
+  );
+};
+  
 export default App;

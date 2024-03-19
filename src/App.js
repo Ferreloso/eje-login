@@ -68,6 +68,10 @@ const WrappedView = () => {
                       <td>{userData.mail}</td>
                     </tr>
                     <tr>
+                      <td><strong>Carrera:</strong></td>
+                      <td>{userData.jobTitle}</td>
+                    </tr>
+                    <tr>
                       <td><strong>Foto de perfil:</strong></td>
                       <td>
                         {userData.photo ? (
